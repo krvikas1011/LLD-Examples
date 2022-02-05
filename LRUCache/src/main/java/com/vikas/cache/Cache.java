@@ -1,11 +1,13 @@
 package com.vikas.cache;
 
+import com.vikas.cache.exception.InvalidStateException;
+import com.vikas.cache.exception.KeyNotFoundException;
+import com.vikas.cache.exception.StorageFullException;
+import com.vikas.cache.storage.Storage;
+
 import java.util.Objects;
 
-/**
- * Inspired By - https://github.com/goyal27/cache-lld
- */
-
+/** Inspired By - https://github.com/goyal27/cache-lld */
 public class Cache<Key, Value> {
   private final Storage<Key, Value> storage;
   private final EvictionPolicy<Key> evictionPolicy;
