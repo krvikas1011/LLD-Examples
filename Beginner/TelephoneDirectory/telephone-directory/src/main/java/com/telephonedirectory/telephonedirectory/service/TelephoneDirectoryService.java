@@ -64,11 +64,8 @@ public class TelephoneDirectoryService {
                 contact.setName(updatedContact.getName().toLowerCase());
                 contact.setPhoneNumber(updatedContact.getNewPhoneNumber());
             }
-            return contact;
-        } else {
-            return new Contact();
         }
-
+        return contact;
     }
 
     public String deleteContact(Contact contact) {
