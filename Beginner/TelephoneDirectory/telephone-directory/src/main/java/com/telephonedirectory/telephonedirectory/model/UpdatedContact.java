@@ -3,13 +3,16 @@ package com.telephonedirectory.telephonedirectory.model;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Contact {
+public class UpdatedContact {
 
     @Getter
     @Setter
     private String name;
     @Getter
     @Setter
-    private String phoneNumber;
+    private String oldPhoneNumber;
+    @Getter
+    @Setter
+    private String newPhoneNumber;
 
 }

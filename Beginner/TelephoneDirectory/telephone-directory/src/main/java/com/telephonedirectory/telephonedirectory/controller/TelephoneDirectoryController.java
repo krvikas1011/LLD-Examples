@@ -1,6 +1,7 @@
 package com.telephonedirectory.telephonedirectory.controller;
 
 import com.telephonedirectory.telephonedirectory.model.Contact;
+import com.telephonedirectory.telephonedirectory.model.UpdatedContact;
 import com.telephonedirectory.telephonedirectory.service.TelephoneDirectoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class TelephoneDirectoryController {
     TelephoneDirectoryService telephoneDirectoryService;
 
     @GetMapping("/{name}")
-    public ResponseEntity<ArrayList<String>> getContact(@PathVariable String name) {
+    public ResponseEntity<List<String>> getContact(@PathVariable String name) {
         return new ResponseEntity<>(telephoneDirectoryService.getContact(name), HttpStatus.OK);
     }
 
@@ -29,13 +30,13 @@ public class TelephoneDirectoryController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addContact(@RequestBody Contact contact) {
-        return new ResponseEntity<>(telephoneDirectoryService.createContact(contact), HttpStatus.CREATED);
+    public ResponseEntity<Contact> addContact(@RequestBody Contact contact) {
+        return new ResponseEntity<Contact>(telephoneDirectoryService.createContact(contact), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{newPhone}")
-    public ResponseEntity<String> updateContact(@RequestBody Contact contact, @PathVariable String newPhone) {
-        return new ResponseEntity<>(telephoneDirectoryService.updateContact(contact, newPhone), HttpStatus.OK);
+    @PutMapping
+    public ResponseEntity<UpdatedContact> updateContact(@RequestBody UpdatedContact contact) {
+        return new ResponseEntity<UpdatedContact>(telephoneDirectoryService.updateContact(contact), HttpStatus.OK);
     }
 
     @DeleteMapping
