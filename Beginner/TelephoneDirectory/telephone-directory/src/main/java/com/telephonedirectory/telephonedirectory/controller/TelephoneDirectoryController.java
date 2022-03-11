@@ -1,14 +1,13 @@
 package com.telephonedirectory.telephonedirectory.controller;
 
 import com.telephonedirectory.telephonedirectory.model.Contact;
-import com.telephonedirectory.telephonedirectory.model.UpdatedContact;
+import com.telephonedirectory.telephonedirectory.model.UpdateContact;
 import com.telephonedirectory.telephonedirectory.service.TelephoneDirectoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,8 +34,8 @@ public class TelephoneDirectoryController {
     }
 
     @PutMapping
-    public ResponseEntity<UpdatedContact> updateContact(@RequestBody UpdatedContact contact) {
-        return new ResponseEntity<UpdatedContact>(telephoneDirectoryService.updateContact(contact), HttpStatus.OK);
+    public ResponseEntity<Contact> updateContact(@RequestBody UpdateContact contact) {
+        return new ResponseEntity<Contact>(telephoneDirectoryService.updateContact(contact), HttpStatus.OK);
     }
 
     @DeleteMapping

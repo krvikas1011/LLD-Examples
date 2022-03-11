@@ -2,7 +2,7 @@ package com.telephonedirectory.telephonedirectory.service;
 
 
 import com.telephonedirectory.telephonedirectory.model.Contact;
-import com.telephonedirectory.telephonedirectory.model.UpdatedContact;
+import com.telephonedirectory.telephonedirectory.model.UpdateContact;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 @Service
 public class TelephoneDirectoryService {
 
+    // ConcurrentNavigableMap allows the map to be thread safe, and sorts the keys by ascending order internally while storing the data
     private ConcurrentNavigableMap<String, List<String>> telephoneDirectoryList = new ConcurrentSkipListMap<>();
 
     public Contact createContact(Contact contact) {
@@ -52,17 +53,20 @@ public class TelephoneDirectoryService {
         return telephoneDirectoryList;
     }
 
-    public UpdatedContact updateContact(UpdatedContact updatedContact) {
+    public Contact updateContact(UpdateContact updatedContact) {
+        Contact contact = new Contact();
         if(telephoneDirectoryList.containsKey(updatedContact.getName().toLowerCase())) {
             List<String> phoneNumbersList = telephoneDirectoryList.get(updatedContact.getName().toLowerCase());
             if (phoneNumbersList.contains(updatedContact.getOldPhoneNumber())) {
                 int position = phoneNumbersList.indexOf(updatedContact.getOldPhoneNumber());
                 phoneNumbersList.remove(updatedContact.getOldPhoneNumber());
                 phoneNumbersList.add(position, updatedContact.getNewPhoneNumber());
+                contact.setName(updatedContact.getName().toLowerCase());
+                contact.setPhoneNumber(updatedContact.getNewPhoneNumber());
             }
-            return updatedContact;
+            return contact;
         } else {
-            return new UpdatedContact();
+            return new Contact();
         }
 
     }
