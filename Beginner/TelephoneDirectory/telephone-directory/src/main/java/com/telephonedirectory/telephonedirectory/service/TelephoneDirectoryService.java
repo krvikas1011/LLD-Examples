@@ -2,7 +2,7 @@ package com.telephonedirectory.telephonedirectory.service;
 
 
 import com.telephonedirectory.telephonedirectory.model.Contact;
-import com.telephonedirectory.telephonedirectory.model.UpdateContact;
+import com.telephonedirectory.telephonedirectory.model.UpdatedContactInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,6 +18,10 @@ public class TelephoneDirectoryService {
     private ConcurrentNavigableMap<String, List<String>> telephoneDirectory = new ConcurrentSkipListMap<>();
 
     public Contact createContact(Contact contact) {
+        if(contact.getName() == null || contact.getName().isEmpty() || contact.getPhoneNumber() == null || contact.getPhoneNumber().isEmpty()) {
+            System.out.print("Input data cannot be null or empty");
+            return new Contact();
+        }
         List<String> phoneNumbersList;
         if(telephoneDirectory != null) {
             if(!telephoneDirectory.containsKey(contact.getName().toLowerCase())) {
@@ -40,6 +44,9 @@ public class TelephoneDirectoryService {
     }
 
     public ArrayList<String> getContact(String name) {
+        if(name == null || name.isEmpty()) {
+            return new ArrayList<>();
+        }
         List<String> phoneNumbersList;
         if(!telephoneDirectory.containsKey(name.toLowerCase())) {
             phoneNumbersList = new ArrayList<>();
@@ -53,8 +60,13 @@ public class TelephoneDirectoryService {
         return telephoneDirectory;
     }
 
-    public Contact updateContact(UpdateContact updatedContact) {
+    public Contact updateContact(UpdatedContactInfo updatedContact) {
         Contact contact = new Contact();
+        if(updatedContact.getName() == null || updatedContact.getName().isEmpty() || updatedContact.getOldPhoneNumber() == null || updatedContact.getOldPhoneNumber().isEmpty()
+                || updatedContact.getNewPhoneNumber() == null || updatedContact.getNewPhoneNumber().isEmpty()) {
+            System.out.print("Input data cannot be null or empty");
+            return contact;
+        }
         if(telephoneDirectory.containsKey(updatedContact.getName().toLowerCase())) {
             List<String> phoneNumbersList = telephoneDirectory.get(updatedContact.getName().toLowerCase());
             if (phoneNumbersList.contains(updatedContact.getOldPhoneNumber())) {
@@ -69,6 +81,10 @@ public class TelephoneDirectoryService {
     }
 
     public String deleteContact(Contact contact) {
+        if(contact.getName() == null || contact.getName().isEmpty() || contact.getPhoneNumber() == null || contact.getPhoneNumber().isEmpty()) {
+            System.out.print("Input data cannot be null or empty");
+            return "Error deleting";
+        }
         if(telephoneDirectory.containsKey(contact.getName().toLowerCase())) {
             List<String> phoneNumbersList = telephoneDirectory.get(contact.getName().toLowerCase());
             if (phoneNumbersList.contains(contact.getPhoneNumber())) {

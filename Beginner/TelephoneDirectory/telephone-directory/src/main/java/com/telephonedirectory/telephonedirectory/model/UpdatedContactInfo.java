@@ -3,7 +3,7 @@ package com.telephonedirectory.telephonedirectory.model;
 import lombok.Getter;
 import lombok.Setter;
 
-public class UpdateContact {
+public class UpdatedContactInfo {
 
     @Getter
     @Setter
