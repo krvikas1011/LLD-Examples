@@ -1,76 +1,99 @@
 package com.telephonedirectory.telephonedirectory.service;
 
-import com.telephonedirectory.telephonedirectory.ContactStorage;
+
 import com.telephonedirectory.telephonedirectory.model.Contact;
+import com.telephonedirectory.telephonedirectory.model.UpdatedContactInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentNavigableMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 @Service
 public class TelephoneDirectoryService {
 
-    Contact contact = new Contact();
+    // ConcurrentNavigableMap allows the map to be thread safe, and sorts the keys by ascending order internally while storing the data
+    private ConcurrentNavigableMap<String, List<String>> telephoneDirectory = new ConcurrentSkipListMap<>();
 
-    public String createContact(Contact contact) {
+    public Contact createContact(Contact contact) {
+        if(contact == null || contact.getName() == null || contact.getName().isEmpty() || contact.getPhoneNumber() == null || contact.getPhoneNumber().isEmpty()) {
+            System.out.print("Input data cannot be null or empty");
+            return new Contact();
+        }
         List<String> phoneNumbersList;
-        if(ContactStorage.getTelephoneDirectoryList() != null) {
-            if(!ContactStorage.getTelephoneDirectoryList().containsKey(contact.getName().toLowerCase())) {
+        if(telephoneDirectory != null) {
+            if(!telephoneDirectory.containsKey(contact.getName().toLowerCase())) {
                 phoneNumbersList = new ArrayList<>();
-                phoneNumbersList.add(contact.getPhone());
-                ContactStorage.getTelephoneDirectoryList().put(contact.getName().toLowerCase(), phoneNumbersList);
+                phoneNumbersList.add(contact.getPhoneNumber());
+                telephoneDirectory.put(contact.getName().toLowerCase(), phoneNumbersList);
             } else {
-                phoneNumbersList = ContactStorage.getTelephoneDirectoryList().get(contact.getName().toLowerCase());
-                if(!phoneNumbersList.contains(contact.getPhone())) {
-                    phoneNumbersList.add(contact.getPhone());
+                phoneNumbersList = telephoneDirectory.get(contact.getName().toLowerCase());
+                if(!phoneNumbersList.contains(contact.getPhoneNumber())) {
+                    phoneNumbersList.add(contact.getPhoneNumber());
                 }
             }
         } else {
+            telephoneDirectory = new ConcurrentSkipListMap<>();
             phoneNumbersList = new ArrayList<>();
-            phoneNumbersList.add(contact.getPhone());
-            ContactStorage.getTelephoneDirectoryList().put(contact.getName().toLowerCase(), phoneNumbersList);
+            phoneNumbersList.add(contact.getPhoneNumber());
+            telephoneDirectory.put(contact.getName().toLowerCase(), phoneNumbersList);
         }
-        return "Added contact";
+        return contact;
     }
 
     public ArrayList<String> getContact(String name) {
+        if(name == null || name.isEmpty()) {
+            return new ArrayList<>();
+        }
         List<String> phoneNumbersList;
-        if(!ContactStorage.getTelephoneDirectoryList().containsKey(name.toLowerCase())) {
+        if(!telephoneDirectory.containsKey(name.toLowerCase())) {
             phoneNumbersList = new ArrayList<>();
         } else {
-            phoneNumbersList = ContactStorage.getTelephoneDirectoryList().get(name.toLowerCase());
+            phoneNumbersList = telephoneDirectory.get(name.toLowerCase());
         }
         return new ArrayList<>(phoneNumbersList);
     }
 
     public Map<String, List<String>> getAllContacts() {
-        return ContactStorage.getTelephoneDirectoryList();
+        return telephoneDirectory;
     }
 
-    public String updateContact(Contact contact, String newPhone) {
-        List<String> phoneNumbersList;
-        if(ContactStorage.getTelephoneDirectoryList().containsKey(contact.getName().toLowerCase())) {
-            phoneNumbersList = ContactStorage.getTelephoneDirectoryList().get(contact.getName().toLowerCase());
-            if (phoneNumbersList.contains(contact.getPhone())) {
-                int position = phoneNumbersList.indexOf(contact.getPhone());
-                phoneNumbersList.remove(contact.getPhone());
-                phoneNumbersList.add(position, newPhone);
+    public Contact updateContact(UpdatedContactInfo updatedContact) {
+        Contact contact = new Contact();
+        if(updatedContact == null || updatedContact.getName() == null || updatedContact.getName().isEmpty() || updatedContact.getOldPhoneNumber() == null || updatedContact.getOldPhoneNumber().isEmpty()
+                || updatedContact.getNewPhoneNumber() == null || updatedContact.getNewPhoneNumber().isEmpty()) {
+            System.out.print("Input data cannot be null or empty");
+            return contact;
+        }
+        if(telephoneDirectory.containsKey(updatedContact.getName().toLowerCase())) {
+            List<String> phoneNumbersList = telephoneDirectory.get(updatedContact.getName().toLowerCase());
+            if (phoneNumbersList.contains(updatedContact.getOldPhoneNumber())) {
+                int position = phoneNumbersList.indexOf(updatedContact.getOldPhoneNumber());
+                phoneNumbersList.remove(updatedContact.getOldPhoneNumber());
+                phoneNumbersList.add(position, updatedContact.getNewPhoneNumber());
+                contact.setName(updatedContact.getName().toLowerCase());
+                contact.setPhoneNumber(updatedContact.getNewPhoneNumber());
             }
         }
-        return "Updated contact";
+        return contact;
     }
 
     public String deleteContact(Contact contact) {
-        List<String> phoneNumbersList;
-        if(ContactStorage.getTelephoneDirectoryList().containsKey(contact.getName().toLowerCase())) {
-            phoneNumbersList = ContactStorage.getTelephoneDirectoryList().get(contact.getName().toLowerCase());
-            if (phoneNumbersList.contains(contact.getPhone())) {
-                phoneNumbersList.remove(contact.getPhone());
-            }
+        if(contact == null || contact.getName() == null || contact.getName().isEmpty() || contact.getPhoneNumber() == null || contact.getPhoneNumber().isEmpty()) {
+            System.out.print("Input data cannot be null or empty");
+            return "Error deleting";
         }
-        return "Deleted your contact";
+        if(telephoneDirectory.containsKey(contact.getName().toLowerCase())) {
+            List<String> phoneNumbersList = telephoneDirectory.get(contact.getName().toLowerCase());
+            if (phoneNumbersList.contains(contact.getPhoneNumber())) {
+                phoneNumbersList.remove(contact.getPhoneNumber());
+            }
+            return "Deleted your contact";
+        } else {
+            return "Contact not found";
+        }
     }
 
 }
