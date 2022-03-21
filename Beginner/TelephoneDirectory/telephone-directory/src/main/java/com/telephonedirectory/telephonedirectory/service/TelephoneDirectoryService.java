@@ -18,7 +18,7 @@ public class TelephoneDirectoryService {
     private ConcurrentNavigableMap<String, List<String>> telephoneDirectory = new ConcurrentSkipListMap<>();
 
     public Contact createContact(Contact contact) {
-        if(contact.getName() == null || contact.getName().isEmpty() || contact.getPhoneNumber() == null || contact.getPhoneNumber().isEmpty()) {
+        if(contact == null || contact.getName() == null || contact.getName().isEmpty() || contact.getPhoneNumber() == null || contact.getPhoneNumber().isEmpty()) {
             System.out.print("Input data cannot be null or empty");
             return new Contact();
         }
@@ -62,7 +62,7 @@ public class TelephoneDirectoryService {
 
     public Contact updateContact(UpdatedContactInfo updatedContact) {
         Contact contact = new Contact();
-        if(updatedContact.getName() == null || updatedContact.getName().isEmpty() || updatedContact.getOldPhoneNumber() == null || updatedContact.getOldPhoneNumber().isEmpty()
+        if(updatedContact == null || updatedContact.getName() == null || updatedContact.getName().isEmpty() || updatedContact.getOldPhoneNumber() == null || updatedContact.getOldPhoneNumber().isEmpty()
                 || updatedContact.getNewPhoneNumber() == null || updatedContact.getNewPhoneNumber().isEmpty()) {
             System.out.print("Input data cannot be null or empty");
             return contact;
@@ -81,7 +81,7 @@ public class TelephoneDirectoryService {
     }
 
     public String deleteContact(Contact contact) {
-        if(contact.getName() == null || contact.getName().isEmpty() || contact.getPhoneNumber() == null || contact.getPhoneNumber().isEmpty()) {
+        if(contact == null || contact.getName() == null || contact.getName().isEmpty() || contact.getPhoneNumber() == null || contact.getPhoneNumber().isEmpty()) {
             System.out.print("Input data cannot be null or empty");
             return "Error deleting";
         }
