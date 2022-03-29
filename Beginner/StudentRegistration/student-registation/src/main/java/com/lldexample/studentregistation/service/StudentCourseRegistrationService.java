@@ -25,16 +25,6 @@ public class StudentCourseRegistrationService {
         Course courseData = null;
         int courseId = studentCourseRegistrationData.getCourseId();
         int studentId = studentCourseRegistrationData.getStudentId();
-        // for (Course course : courseService.getCourseData()) {
-        // if (course.getId() == courseId) {
-        // courseData = course;
-        // break;
-        // }
-        // }
-        // if (courseData == null) {
-        // System.out.println("Course with id " + courseId + " does not exist.");
-        // return new Student();
-        // }
         if (!courseService.isValidCourse(courseId)) {
             return null;
         }
