@@ -22,10 +22,11 @@ public class StudentCourseRegistrationService {
     }
 
     public Student registerCourseToStudent(StudentCourseRegistrationData studentCourseRegistrationData) {
-        Course courseData = null;
+        Course courseData;
         int courseId = studentCourseRegistrationData.getCourseId();
         int studentId = studentCourseRegistrationData.getStudentId();
-        if (!courseService.isValidCourse(courseId)) {
+        courseData = courseService.getCourseById(courseId);
+        if (courseData == null) {
             return null;
         }
         Student targetStudent = studentService.getStudentById(studentId);
@@ -37,10 +38,11 @@ public class StudentCourseRegistrationService {
     }
 
     public Student deRegisterCourseFromStudent(StudentCourseRegistrationData studentCourseRegistrationData) {
-        Course courseData = null;
+        Course courseData;
         int courseId = studentCourseRegistrationData.getCourseId();
         int studentId = studentCourseRegistrationData.getStudentId();
-        if (!courseService.isValidCourse(courseId)) {
+        courseData = courseService.getCourseById(courseId);
+        if (courseData == null) {
             return null;
         }
         Student targetStudent = studentService.getStudentById(studentId);

@@ -64,8 +64,4 @@ public class CourseService {
         courses.clear();
         return "Removed all courses.";
     }
-
-    public boolean isValidCourse(int courseId) {
-        return courses.stream().filter(course -> course.getId() == courseId).findFirst().isPresent();
-    }
 }
