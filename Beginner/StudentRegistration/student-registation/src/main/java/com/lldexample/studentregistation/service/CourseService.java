@@ -10,6 +10,10 @@ import java.util.Set;
 public class CourseService {
     private Set<Courses> courses = new HashSet<>();
 
+    public Set<Courses> getCourseData() {
+        return courses;
+    }
+
     private int id = 1;
 
     public Courses getCourseById(int id) {

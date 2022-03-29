@@ -1,21 +1,20 @@
 package com.lldexample.studentregistation.dto;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
+@Data
 public class Courses {
 
-    @Getter
-    @Setter
     private int id;
 
-    @Getter
-    @Setter
     private String name;
 
-    @Getter
-    @Setter
-    private List<Student> students;
+    @Override
+    public boolean equals(Object courseObject) {
+        Courses course = (Courses) courseObject;
+        return this.name.equals(course.name);
+    }
+
 }

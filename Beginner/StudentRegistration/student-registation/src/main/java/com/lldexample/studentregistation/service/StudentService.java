@@ -11,6 +11,10 @@ public class StudentService {
 
     private Set<Student> students = new HashSet<>();
 
+    public Set<Student> getStudentsData() {
+        return students;
+    }
+
     private int id = 1;
 
     public Student getStudentById(int id) {

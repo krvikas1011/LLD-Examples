@@ -2,7 +2,6 @@ package com.lldexample.studentregistation.controller;
 
 import com.lldexample.studentregistation.dto.Student;
 import com.lldexample.studentregistation.service.StudentService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
