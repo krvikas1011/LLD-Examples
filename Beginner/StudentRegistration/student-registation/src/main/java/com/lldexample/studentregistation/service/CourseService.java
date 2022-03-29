@@ -17,14 +17,11 @@ public class CourseService {
     }
 
     public Course getCourseById(int id) {
+        Course foundCourse = null;
         if (!courses.isEmpty()) {
-            for (Course course : courses) {
-                if (course.getId() == id) {
-                    return course;
-                }
-            }
+            foundCourse = courses.stream().filter(course -> course.getId() == id).findFirst().orElse(null);
         }
-        return null;
+        return foundCourse;
     }
 
     public Course createCourse(Course course) {

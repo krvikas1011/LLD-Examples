@@ -12,14 +12,11 @@ public class StudentService {
     private Set<Student> students = new HashSet<>();
 
     public Student getStudentById(int id) {
+        Student foundStudent = null;
         if (!students.isEmpty()) {
-            for (Student student : students) {
-                if (student.getId() == id) {
-                    return student;
-                }
-            }
+            foundStudent = students.stream().filter(student -> student.getId() == id).findFirst().orElse(null);
         }
-        return null;
+        return foundStudent;
     }
 
     public Set<Student> getAllStudents() {
