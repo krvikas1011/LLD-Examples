@@ -35,4 +35,19 @@ public class StudentCourseRegistrationService {
         targetStudent.getCourses().add(courseData);
         return targetStudent;
     }
+
+    public Student deRegisterCourseFromStudent(StudentCourseRegistrationData studentCourseRegistrationData) {
+        Course courseData = null;
+        int courseId = studentCourseRegistrationData.getCourseId();
+        int studentId = studentCourseRegistrationData.getStudentId();
+        if (!courseService.isValidCourse(courseId)) {
+            return null;
+        }
+        Student targetStudent = studentService.getStudentById(studentId);
+        if (targetStudent == null) {
+            return null;
+        }
+        targetStudent.getCourses().remove(courseData);
+        return targetStudent;
+    }
 }
