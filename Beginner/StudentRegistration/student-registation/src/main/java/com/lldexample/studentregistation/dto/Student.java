@@ -12,12 +12,12 @@ public class Student {
 
     private String email;
 
-    private List<Courses> courses;
+    private List<Course> courses;
 
     @Override
     public boolean equals(Object obj) {
         Student student = (Student) obj;
-        return this.name.equals(student.name) &&
-                this.email.equals(student.email);
+        return this.id == student.id || (this.name.equals(student.name) &&
+                this.email.equals(student.email));
     }
 }

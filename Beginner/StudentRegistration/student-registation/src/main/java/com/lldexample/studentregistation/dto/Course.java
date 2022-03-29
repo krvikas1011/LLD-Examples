@@ -1,11 +1,9 @@
 package com.lldexample.studentregistation.dto;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
-public class Courses {
+public class Course {
 
     private int id;
 
@@ -13,8 +11,7 @@ public class Courses {
 
     @Override
     public boolean equals(Object courseObject) {
-        Courses course = (Courses) courseObject;
-        return this.name.equals(course.name);
+        Course course = (Course) courseObject;
+        return this.id == course.id || this.name.equals(course.name);
     }
-
 }

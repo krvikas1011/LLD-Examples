@@ -13,8 +13,12 @@ import java.util.Set;
 @RequestMapping("/student")
 public class StudentController {
 
+    private final StudentService studentService;
+
     @Autowired
-    StudentService studentService;
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable int id) {

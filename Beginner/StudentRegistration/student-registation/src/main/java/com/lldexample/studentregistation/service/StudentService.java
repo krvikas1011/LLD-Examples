@@ -8,24 +8,18 @@ import java.util.Set;
 
 @Service
 public class StudentService {
-
+    private int id = 1;
     private Set<Student> students = new HashSet<>();
 
-    public Set<Student> getStudentsData() {
-        return students;
-    }
-
-    private int id = 1;
-
     public Student getStudentById(int id) {
-        if(!students.isEmpty()) {
+        if (!students.isEmpty()) {
             for (Student student : students) {
                 if (student.getId() == id) {
                     return student;
                 }
             }
         }
-        return new Student();
+        return null;
     }
 
     public Set<Student> getAllStudents() {
@@ -43,7 +37,7 @@ public class StudentService {
     }
 
     public Student updateStudentById(Student student, int id) {
-        if(!students.isEmpty()) {
+        if (!students.isEmpty()) {
             for (Student studentObject : students) {
                 if (studentObject.getId() == id) {
                     studentObject.setName(student.getName());
@@ -52,11 +46,11 @@ public class StudentService {
                 }
             }
         }
-        return new Student();
+        return null;
     }
 
     public String deleteStudentById(int id) {
-        if(!students.isEmpty()) {
+        if (!students.isEmpty()) {
             for (Student studentObject : students) {
                 if (studentObject.getId() == id) {
                     students.remove(studentObject);
@@ -68,7 +62,7 @@ public class StudentService {
     }
 
     public String deleteAllStudents() {
-        students = new HashSet<>();
+        students.clear();
         return "Removed all students.";
     }
 }

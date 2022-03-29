@@ -1,6 +1,6 @@
 package com.lldexample.studentregistation.controller;
 
-import com.lldexample.studentregistation.dto.Courses;
+import com.lldexample.studentregistation.dto.Course;
 import com.lldexample.studentregistation.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,26 +13,30 @@ import java.util.Set;
 @RequestMapping("/course")
 public class CourseController {
 
+    private final CourseService courseService;
+
     @Autowired
-    CourseService courseService;
+    public CourseController(CourseService courseService) {
+        this.courseService = courseService;
+    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Courses> getCourseById(@PathVariable int id) {
+    public ResponseEntity<Course> getCourseById(@PathVariable int id) {
         return new ResponseEntity<>(courseService.getCourseById(id), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<Set<Courses>> getAllCourses() {
+    public ResponseEntity<Set<Course>> getAllCourses() {
         return new ResponseEntity<>(courseService.getAllCourses(), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Courses> createCourse(@RequestBody Courses course) {
+    public ResponseEntity<Course> createCourse(@RequestBody Course course) {
         return new ResponseEntity<>(courseService.createCourse(course), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Courses> updateCourseById(@RequestBody Courses course, @PathVariable int id) {
+    public ResponseEntity<Course> updateCourseById(@RequestBody Course course, @PathVariable int id) {
         return new ResponseEntity<>(courseService.updateCourseById(course, id), HttpStatus.OK);
     }
 
