@@ -17,11 +17,9 @@ public class CourseService {
     }
 
     public Course getCourseById(int id) {
-        Course foundCourse = null;
-        if (!courses.isEmpty()) {
-            foundCourse = courses.stream().filter(course -> course.getId() == id).findFirst().orElse(null);
-        }
-        return foundCourse;
+        return courses.isEmpty()
+                ? null
+                : courses.stream().filter(course -> course.getId() == id).findFirst().orElse(null);
     }
 
     public Course createCourse(Course course) {
