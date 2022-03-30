@@ -1,3 +1,6 @@
+package scheduler;
+
+import model.ScheduleObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -5,11 +8,11 @@ public class SimpleScheduler {
 
     private static Logger logger = LogManager.getLogger(SimpleScheduler.class);
 
-    private void scheduleTask(String message, int interval) {
+    public void scheduleTask(ScheduleObject scheduleObject) {
         while(true) {
-            System.out.println(message);
+            System.out.println(scheduleObject.getMessage());
             try {
-                Thread.sleep(interval * 1000L);
+                Thread.sleep(scheduleObject.getInterval() * 1000L);
             } catch (InterruptedException e) {
                 logger.error("The thread was interrupted ", e);
                 System.exit(-1);
@@ -17,7 +20,8 @@ public class SimpleScheduler {
         }
     }
 
-    public static void main(String[] args) {
+    public ScheduleObject getScheduleData(String[] args) {
+        ScheduleObject scheduleObject = new ScheduleObject();
         String message = args[0];
         int interval = 0;
         try {
@@ -26,6 +30,8 @@ public class SimpleScheduler {
             logger.error("The input given for interval is not integer ", e);
             System.exit(-1);
         }
-        new SimpleScheduler().scheduleTask(message, interval);
+        scheduleObject.setMessage(message);
+        scheduleObject.setInterval(interval);
+        return scheduleObject;
     }
 }
