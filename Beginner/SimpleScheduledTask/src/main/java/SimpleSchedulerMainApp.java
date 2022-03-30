@@ -1,11 +1,11 @@
 import scheduler.SimpleScheduler;
-import model.ScheduleObject;
+import model.Schedule;
 
 public class SimpleSchedulerMainApp {
 
     public static void main(String[] args) {
         SimpleScheduler simpleScheduler = new SimpleScheduler();
-        ScheduleObject scheduleObject = simpleScheduler.getScheduleData(args);
-        simpleScheduler.scheduleTask(scheduleObject);
+        Schedule schedule = simpleScheduler.getScheduleData(args);
+        simpleScheduler.scheduleTask(schedule);
     }
 }
