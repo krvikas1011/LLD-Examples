@@ -6,12 +6,11 @@ import java.util.concurrent.Executors;
 
 public class Executor {
 
-    public void execute(List<Schedule> schedulers) {
+    public void execute(List<Schedule> tasks) {
         ExecutorService executorService = Executors.newFixedThreadPool(10);
-        for(Schedule scheduler : schedulers) {
-            executorService.submit(scheduler);
+        for(Schedule task : tasks) {
+            executorService.submit(task);
         }
-        executorService.shutdown();
     }
 
 }

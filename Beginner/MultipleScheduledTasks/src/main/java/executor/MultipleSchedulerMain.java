@@ -7,27 +7,25 @@ import java.util.Scanner;
 public class MultipleSchedulerMain {
 
     public List<Schedule> getSchedulerTasks() {
-        List<Schedule> schedulers = new ArrayList<>();
+        List<Schedule> tasks = new ArrayList<>();
         System.out.println("How many tasks do you want to schedule?");
         Scanner sc = new Scanner(System.in);
         int num = sc.nextInt();
         for(int i = 0; i < num; i++) {
-            Schedule scheduler = new Schedule();
             System.out.println("Enter your message:");
             String message = sc.next();
             System.out.println("Enter the time interval:");
             int interval = sc.nextInt();
-            scheduler.setMessage(message);
-            scheduler.setTime(interval);
-            schedulers.add(scheduler);
+            Schedule schedule = new Schedule(interval, message);
+            tasks.add(schedule);
         }
-        return schedulers;
+        return tasks;
     }
 
     public static void main(String[] args) {
         MultipleSchedulerMain multipleSchedulerMain = new MultipleSchedulerMain();
-        List<Schedule> schedulers = multipleSchedulerMain.getSchedulerTasks();
+        List<Schedule> tasks = multipleSchedulerMain.getSchedulerTasks();
         Executor executor = new Executor();
-        executor.execute(schedulers);
+        executor.execute(tasks);
     }
 }
