@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MultiTimeZoneMain {
-    public List<Time> getSchedulerTasks() {
-        List<Time> tasks = new ArrayList<>();
+    public List<TimePrinter> getSchedulerTasks() {
+        List<TimePrinter> tasks = new ArrayList<>();
         System.out.println("How many time zones do you want to print?");
         Scanner sc = new Scanner(System.in);
         int num = sc.nextInt();
@@ -15,15 +15,15 @@ public class MultiTimeZoneMain {
             String timezone = sc.next();
             System.out.println("Enter the time interval:");
             int interval = sc.nextInt();
-            Time time = new Time(interval, timezone);
-            tasks.add(time);
+            TimePrinter timePrinter = new TimePrinter(interval, timezone);
+            tasks.add(timePrinter);
         }
         return tasks;
     }
 
     public static void main(String[] args) {
-        MultiTimeZoneMain multipleSchedulerMain = new MultiTimeZoneMain();
-        List<Time> tasks = multipleSchedulerMain.getSchedulerTasks();
+        MultiTimeZoneMain multiTimeZoneMain = new MultiTimeZoneMain();
+        List<TimePrinter> tasks = multiTimeZoneMain.getSchedulerTasks();
         Executor executor = new Executor();
         executor.execute(tasks);
     }

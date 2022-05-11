@@ -6,13 +6,13 @@ import org.apache.logging.log4j.Logger;
 
 
 @Data
-public class Time implements Runnable{
-    private static Logger logger = LogManager.getLogger(Time.class);
+public class TimePrinter implements Runnable{
+    private static Logger logger = LogManager.getLogger(TimePrinter.class);
 
     private String timezone;
     private int interval;
 
-    Time(int interval, String timezone) {
+    public TimePrinter(int interval, String timezone) {
         this.interval = interval;
         this.timezone = timezone;
     }
